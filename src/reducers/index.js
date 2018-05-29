@@ -3,7 +3,8 @@ import {
     FETCH_PLANTS_PENDING,
     FETCH_PLANTS_SUCCESS, 
     FORM_RESET,
-    FORM_UPDATE
+    FORM_UPDATE,
+    FORM_SUBMITTED
 } from '../actions'
 
 const PLANTS_INITIAL_STATE = {
@@ -27,16 +28,18 @@ const PLANT_FORM_INIT_STATE = {
     title: '',
     description: '',
     sun: null,
-    water: null
+    water: null,
+    loading: false
 }
 
 function plantForm(state = PLANT_FORM_INIT_STATE, action){
     switch(action.type){
         case FORM_UPDATE: 
-            // console.log(state)
             return {...state, [action.payload.prop]: action.payload.value}
         case FORM_RESET:
             return {...PLANT_FORM_INIT_STATE}
+        case FORM_SUBMITTED:
+            return {...state, loading: true}
         default:
             return state
     }

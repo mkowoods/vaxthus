@@ -8,7 +8,7 @@ import {
     Button
 } from 'react-native-elements'
 import {connect} from 'react-redux';
-import { Camera, Permissions } from 'expo';
+// import { Camera, Permissions } from 'expo';
 
 import {updateForm, submitForm} from '../actions'
 import style, {COLORS} from '../styles'
@@ -18,7 +18,7 @@ class CreatePlant extends Component {
     constructor(props){
         super(props)
         this.state = {
-            hasTitleError: false
+            hasTitleError: false,
         }
         this.validateBeforSubmit = this.validateBeforSubmit.bind(this);
         this.updateForm = this.updateForm.bind(this)
@@ -84,6 +84,7 @@ class CreatePlant extends Component {
             </View>
             <Button 
                 title="Submit" 
+                loading={this.props.plantForm.loading}
                 onPress={this.validateBeforSubmit}
                 backgroundColor={COLORS.successGreen}
                 containerViewStyle={{marginBottom: 20}}

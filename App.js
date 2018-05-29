@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
-import { Ionicons } from '@expo/vector-icons'
+import Icon from 'react-native-vector-icons/Ionicons'
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk'
@@ -22,6 +22,10 @@ import CreatePlant from './src/components/CreatePlant'
 import Camera from './src/components/Camera'
 
 import {firebaseConfig} from './src/secret-config'
+
+
+//Hide warnings
+console.disableYellowBox = true;
 
 const store = createStore(
   reducers,
@@ -64,15 +68,14 @@ const Router = createBottomTabNavigator(
             iconName = `ios-camera${focused ? '' : '-outline'}`;
             break;
         }
-
         // You can return any component that you like here! We usually use an
         // icon component from react-native-vector-icons
-        return <Ionicons name={iconName} size={25} color={tintColor} />;
+        return <Icon name={iconName} size={25} color={tintColor} />;
       },
     }),
     tabBarOptions: {
       activeTintColor: 'green',
-      inactiveTintColor: 'gray',
+      inactiveTintColor: 'black',
     },
   }
 );

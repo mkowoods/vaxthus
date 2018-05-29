@@ -10,6 +10,7 @@ export const FETCH_PLANTS_PENDING = 'FETCH_PLANTS_PENDING'
 export const FETCH_PLANTS_SUCCESS = 'FETCH_PLANTS_SUCCESS'
 export const FORM_UPDATE = 'FORM_UPDATE'
 export const FORM_RESET = 'FORM_RESET'
+export const FORM_SUBMITTED = 'FORM_SUBMITTED'
 
 // firebase.auth().onAuthStateChanged(user => {
 //     console.log("Current USer", user)
@@ -57,7 +58,7 @@ export const fetchPlants = () => {
 
 export const submitForm = () => {
     return (dispatch, getState) => {
-        console.log("Form Submitted")
+        dispatch({type: FORM_SUBMITTED})
         const {plantForm} = getState();
         const db = firebase.firestore();
         db.collection(`/savedplants/${TEST_USER_ID}/plants`)
