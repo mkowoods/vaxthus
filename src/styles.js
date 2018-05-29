@@ -31,6 +31,6 @@ export default StyleSheet.create({
         height: 300,
         flex: 1,
         width: null,
-        backgroundColor: '#ddd'
+        backgroundColor: '#ddd',
     }
 });

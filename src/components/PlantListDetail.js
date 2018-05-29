@@ -33,6 +33,13 @@ class PlantListDetail extends Component{
         this.props.navigate('Detail', {uid: this.props.plant.uid})
     }
     
+    getImage(){
+        if(this.props.plant.image){
+           return {uri: this.props.plant.image}
+        } else {
+            return require('../assets/leaf.png')
+        }
+    }
 
     render(){
         return (
@@ -40,10 +47,12 @@ class PlantListDetail extends Component{
                 <Card>
                     <CardSection>
                         <TouchableOpacity onPress={this.onImageTouch} style={{flex: 1}}>
-                            <Image 
-                                style={styles.imageStyle}
-                                source = {{uri: this.props.plant.image}}
-                            />
+                            <View style={{padding: 10}}>
+                                <Image 
+                                    style={styles.imageStyle}
+                                    source={this.getImage()}
+                                />
+                            </View>
                         </TouchableOpacity>
                     </CardSection>
                     <CardSection>

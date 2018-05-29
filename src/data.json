@@ -5,10 +5,8 @@
         "title": "Test Image 1",
         "description": "Hey rebecca Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
         "feeding_instructions": "",
-        "environment": {
-            "sun": null,
-            "water": null
-        },
+        "sun": null,
+        "water": null,
         "alerts": [],
         "gallery":[]
     },

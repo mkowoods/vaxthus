@@ -1,22 +1,23 @@
 import {combineReducers} from 'redux';
 import {
+    FETCH_PLANTS_PENDING,
     FETCH_PLANTS_SUCCESS, 
-    PLANT_SELECTED,
     FORM_RESET,
     FORM_UPDATE
 } from '../actions'
 
 const PLANTS_INITIAL_STATE = {
     last_update_date: 0,
+    loading: false,
     data: {},
     selected: null
 }
 function plants(state = PLANTS_INITIAL_STATE, action){
     switch(action.type){
+        case FETCH_PLANTS_PENDING:
+            return {...state, loading: true}
         case FETCH_PLANTS_SUCCESS:
-            return {...state, last_update_date: Date.now(), data: action.payload}
-        case PLANT_SELECTED: 
-            return {...state, selected: action.payload}
+            return {...state, last_update_date: Date.now(), data: action.payload, loading: false}
         default:
             return state
     }

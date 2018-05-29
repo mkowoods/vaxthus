@@ -6,6 +6,9 @@ import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk'
 
+import firebase from 'firebase'
+require('firebase/firestore')
+
 import NavigationService from './src/NavigationService'
 
 import {fetchPlants} from './src/actions'
@@ -26,9 +29,6 @@ const store = createStore(
 );
 
 
-
-
-
 const HomeStack = createStackNavigator({
   Home: PlantList,
   Detail: Detail,
@@ -36,12 +36,11 @@ const HomeStack = createStackNavigator({
 
 const Router = createBottomTabNavigator(
   {
-    CreatePlant: CreatePlant,
     Home: HomeStack,    
     Camera: Camera,
     Search: Search,
     Settings: Settings,
-
+    CreatePlant: CreatePlant,
   },
   {
     navigationOptions: ({ navigation }) => ({
@@ -80,9 +79,17 @@ const Router = createBottomTabNavigator(
 
 
 class App extends Component { 
+
+  constructor(props){
+    super(props);
+    firebase.initializeApp(firebaseConfig);
+    const firestore = firebase.firestore()
+    firestore.settings({timestampsInSnapshots: true});
+  }
     
   componentDidMount(){
-    store.dispatch(fetchPlants())
+    console.log('***** App Mounted ******');
+    //this is sync and blocking
   }
 
   render(){

@@ -57,7 +57,7 @@ class Detail extends Component {
     }
 
     render(){
-        const {title, description, image} = (this.props.selectedPlant || {})
+        const {title, description, image, water, sun} = (this.props.selectedPlant || {})
         return (
             <ScrollView ref='_scrollView'>
                 <Card>
@@ -66,6 +66,10 @@ class Detail extends Component {
                     </CardSection>
                     <CardSection>
                         <Text>{description}</Text>
+                    </CardSection>
+                    <CardSection>
+                        <Text>Water: {water}</Text>
+                        <Text style={{marginLeft: 20}}>Sun: {sun}</Text>
                     </CardSection>
                 </Card>
                 <Card>

@@ -27,6 +27,7 @@ class PlantList extends Component{
     };
 
     componentDidMount(){
+        console.log("Plant List Mounted")
         this.props.fetchPlants()
     }
 
