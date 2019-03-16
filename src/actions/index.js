@@ -12,33 +12,19 @@ export const FORM_UPDATE = 'FORM_UPDATE'
 export const FORM_RESET = 'FORM_RESET'
 export const FORM_SUBMITTED = 'FORM_SUBMITTED'
 
-// firebase.auth().onAuthStateChanged(user => {
-//     console.log("Current USer", user)
-// })
-
-
 
 
 export const fetchPlants = () => {
-
-    
     return (dispatch, getState) => {
-
-
         const state = getState();
-
-        if(state.plants.loading || ((Date.now() - state.plants.last_update_date) < (60 * 60 * 1000))){
-            console.log('Do Nothing Called')
-            return {type: 'DONOTHING'}
-        }
-            
         dispatch({type: FETCH_PLANTS_PENDING})
-
+        console.log(firebase.auth())
+        
         const db = firebase.firestore();
-        db.collection(`/savedplants/${TEST_USER_ID}/plants`)
-            .orderBy("title")
-            .onSnapshot(function(querySnaphot){
-                console.log("Snapshot update")
+        const docRef = db.collection(`/savedplants/${TEST_USER_ID}/plants`) //.doc("3wZt85w30bh409sKHNNr")
+        docRef.get()
+            .then(function(querySnaphot){
+                console.log("Snapshot update", querySnaphot)
                 const payload = {};
                 querySnaphot.forEach(((doc) => {
                     //Add uid to data object and change data structure to hash table keyed on id
@@ -82,12 +68,10 @@ export const updateForm = ({prop, value}) => {
     }
 }
 
-// export const submitForm = () => {
-//     return (dispatch, getState) => {
-//         const {plantForm} = getState();
-//         console.log("Form Submitted", plantForm)
-//         dispatch({type: FORM_RESET})
-//         NavigationService.navigate('Home')
 
-//     }
-// }
+export const pictureTaken = ({base64}) => {
+    return (dispatch, getState) => {
+        const db = firebase.firestore();
+        
+    }
+}

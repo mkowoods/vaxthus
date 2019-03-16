@@ -88,11 +88,13 @@ class App extends Component {
     firebase.initializeApp(firebaseConfig);
     const firestore = firebase.firestore()
     firestore.settings({timestampsInSnapshots: true});
+    firebase.firestore.setLogLevel('debug')
+    console.log("finsihed config")
+    // console.loog(firebase.auth())
   }
     
   componentDidMount(){
     console.log('***** App Mounted ******');
-    //this is sync and blocking
   }
 
   render(){

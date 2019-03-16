@@ -16,7 +16,14 @@
 {
   NSURL *jsCodeLocation;
 
+
+#if DEBUG
+  printf("I'm running in DEBUG mode");
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+#else
+  printf("I'm Running in Production Mode");
+  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+#endif
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"vaxthus"

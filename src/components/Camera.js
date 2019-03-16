@@ -5,9 +5,38 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  AlertIOS
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+import RNFetchBlob from 'react-native-fetch-blob'
+import firebase from 'firebase';
+
+
+'use strict';
+
+const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
+  const byteCharacters = atob(b64Data);
+  const byteArrays = [];
+  
+  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
+    
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+    
+    const byteArray = new Uint8Array(byteNumbers);
+    
+    byteArrays.push(byteArray);
+  }
+  
+  const blob = new Blob(byteArrays, {type: contentType});
+  return blob;
+}
+
+
 
 class Camera extends Component {
   render() {
@@ -36,10 +65,37 @@ class Camera extends Component {
   }
 
   takePicture = async function() {
+    const mime = 'image/jpeg'
+    const name = 'test-2.jpeg'
+    let uploadBlob = null;
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
       const data = await this.camera.takePictureAsync(options)
-      console.log(data.uri);
+      console.log(data.base64)
+      console.log(data.uri)
+      const imageRef = firebase.storage().ref('/jobs')
+      // Blob.clearCache();
+      // Blob.build(data.base64, {type: `${mime};BASE64`})
+      // .then(blob => {
+      //   uploadBlob = blob;
+      //   // console.log(uploadBlob)
+      //   return imageRef.put(blob, { contentType: mime, name: name });
+      // })
+
+      const blob = b64toBlob(data.base64, 'image/jpeg;base64')
+
+      imageRef.put(blob, { contentType: mime, name: name })
+        .then(() => {
+          console.log("image Ref uploaded")
+          return imageRef.getDownloadURL();
+        })
+        .then(url => {
+          console.log("download url", url)
+          AlertIOS.alert(url)
+        })
+        .catch(error => {
+          AlertIOS.alert(error)
+        })
     }
   };
 }

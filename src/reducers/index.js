@@ -7,6 +7,14 @@ import {
     FORM_SUBMITTED
 } from '../actions'
 
+
+import {
+    FETCH_WEATHER_REQUEST,
+    FETCH_WEATHER_SUCCESS,
+    FETCH_WEATHER_ERROR
+} from '../actions/forecast'
+
+
 const PLANTS_INITIAL_STATE = {
     last_update_date: 0,
     loading: false,
@@ -45,8 +53,18 @@ function plantForm(state = PLANT_FORM_INIT_STATE, action){
     }
 }
 
+function forecast(state = {}, action){
+    console.log('Action:', action)
+    switch(action.type){
+        case FETCH_WEATHER_SUCCESS:
+            console.log(action.payload)
+            return action.payload[0]
+    }
+    return state;
+}
 
 export default combineReducers({
-    plants: plants,
-    plantForm: plantForm
+    plants,
+    plantForm,
+    forecast
 })

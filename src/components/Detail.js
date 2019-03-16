@@ -6,6 +6,7 @@ import WeatherChart from './DetailComponents/WeatherChart'
 import {connect} from 'react-redux'
 import Gallery from 'react-native-image-gallery';
 import styles from '../styles'
+import {fetchWeather} from '../actions/forecast'
 
 
 const fill = 'rgb(134, 65, 244)'
@@ -53,11 +54,13 @@ class Detail extends Component {
 
 
     onShowForecastPress(){
+        this.props.fetchWeather('Stockholm', 'SE')
         this.setState({showForecast: !this.state.showForecast})
     }
 
     render(){
         const {title, description, image, water, sun} = (this.props.selectedPlant || {})
+        console.log(this.props.tempList)
         return (
             <ScrollView ref='_scrollView'>
                 <Card>
@@ -133,12 +136,16 @@ class Detail extends Component {
     }
 }
 
-const mapStateToProps = ({plants}, ownProps) => {
+const mapStateToProps = ({plants, forecast}, ownProps) => {
     const selected = ownProps.navigation.getParam('uid') || "1"
+    console.log(forecast)
+    const tempList = (forecast.list || []).map((item) => item.main.temp)
     return {
-        selectedPlant: plants.data[selected]
+        selectedPlant: plants.data[selected],
+        forecast,
+        tempList
     }
 }
 
 
-export default connect(mapStateToProps)(Detail);
+export default connect(mapStateToProps, {fetchWeather})(Detail);
